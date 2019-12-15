@@ -35,7 +35,7 @@ class UpdateMovie extends React.Component {
     updateUser = event => {
         event.preventDefault()
 
-        window.location.href = `/movies/update/${this.props.id}`
+        window.location.href = `/movies/update/${this.props.movies[0].id}`
     }
     render() {
         return <Update onClick={this.updateUser}>Update</Update>
@@ -43,14 +43,16 @@ class UpdateMovie extends React.Component {
 }
 
 class DeleteMovie extends React.Component {
-    deleteUser = event => {
-        event.preventDefault()
 
+    deleteUser = event => {
+        console.log(this.props.movies)
+        event.preventDefault()
+        
         if (
             window.confirm(
-                `Do you want to delete the movie ${this.props.name} permanently?`
-            )
-        ) {
+                `Do you want to delete the movie ${this.props.movies[0].name} permanently?`
+                )
+                ) {
             api.deleteMovieById(this.props.id)
             window.location.reload()
         }
@@ -125,8 +127,8 @@ class MoviesList extends React.Component {
                                 return (
                                     <div>
                                         <li>{movie.name}</li>
-                                        <UpdateMovie />
-                                        <DeleteMovie />
+                                        <UpdateMovie movies={movies}/>
+                                        <DeleteMovie movies={movies}/>
                                     </div>
                                 )
                             })}
