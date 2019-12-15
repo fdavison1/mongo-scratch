@@ -15,12 +15,57 @@ list-style: none
 font-family: sans-serif
 font-size: 2rem`
 
-class MoviesList extends React.Component{
-    constructor(props){
+const Update = styled.div`
+color: #ef9b0f
+cursor: pointer
+font-size: 1rem
+background: lightgray
+width: 100px
+margin: 0 auto`
+
+const Delete = styled.div`
+color: #ff0000
+cursor: pointer
+font-size: 1rem
+border: 1px solid #ff0000
+width: 100px
+margin: 0 auto`
+
+class UpdateMovie extends React.Component {
+    updateUser = event => {
+        event.preventDefault()
+
+        window.location.href = `/movies/update/${this.props.id}`
+    }
+    render() {
+        return <Update onClick={this.updateUser}>Update</Update>
+    }
+}
+
+class DeleteMovie extends React.Component {
+    deleteUser = event => {
+        event.preventDefault()
+
+        if (
+            window.confirm(
+                `Do you want to delete the movie ${this.props.name} permanently?`
+            )
+        ) {
+            api.deleteMovieById(this.props.id)
+            window.location.reload()
+        }
+    }
+    render() {
+        return <Delete onClick={this.deleteUser}>Delete</Delete>
+    }
+}
+
+class MoviesList extends React.Component {
+    constructor(props) {
         super(props)
         this.state = {
             movies: [],
-            columns: [],
+            // columns: [],
             isLoading: false,
         }
     }
@@ -59,22 +104,35 @@ class MoviesList extends React.Component{
         // ]
 
         let showTable = true
-        if (!movies.length){
+        if (!movies.length) {
             showTable = false
         }
 
         return (
             <Wrapper>
+
+                {isLoading && (
+                    <div>
+                        <h1>Loading...</h1>
+                    </div>
+                )}
+
                 {showTable && (
-                <Wrapper>
+                    <Wrapper>
 
-                    <UL>
-                   {movies.map(movie => {
-                       return <li>{movie.name}</li>
-                })}
-                </UL>
+                        <UL>
+                            {movies.map(movie => {
+                                return (
+                                    <div>
+                                        <li>{movie.name}</li>
+                                        <UpdateMovie />
+                                        <DeleteMovie />
+                                    </div>
+                                )
+                            })}
+                        </UL>
 
-                </Wrapper>
+                    </Wrapper>
                 )}
             </Wrapper>
         )

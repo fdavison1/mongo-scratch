@@ -25,7 +25,7 @@ class Links extends React.Component {
                     <List>
                         <Item>
                             <Link to='/movies/list' className='nav-link'>
-                                List Movies
+                                Movie List
                             </Link>
                         </Item>
                         <Item>
