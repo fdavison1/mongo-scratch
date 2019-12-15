@@ -110,6 +110,7 @@ class MoviesList extends React.Component {
             showTable = false
         }
 
+        console.log(movies)
         return (
             <Wrapper>
 
@@ -127,6 +128,7 @@ class MoviesList extends React.Component {
                                 return (
                                     <div>
                                         <li>{movie.name}</li>
+                                        {/* <li>{movie.time}</li> */}
                                         <UpdateMovie movies={movies}/>
                                         <DeleteMovie movies={movies}/>
                                     </div>
